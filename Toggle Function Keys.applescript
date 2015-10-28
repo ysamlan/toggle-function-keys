@@ -17,28 +17,15 @@ tell application "System Events"
 				set messageToShow to messageToShow & "media/hardware controls."
 			end if
 			
-			tell application "GrowlHelperApp"
-				-- Make a list of all the notification types 
-				-- that this script will ever send:
-				set the allNotificationsList to {"Function Keys Toggled"}
-				-- Make a list of the notifications 
-				-- that will be enabled by default.      
-				-- Those not enabled by default can be enabled later 
-				-- in the 'Applications' tab of the growl prefpane.
-				set the enabledNotificationsList to {"Function Keys Toggled"}
-				-- Register our script with growl.
-				register as application "Toggle Function Keys" all notifications allNotificationsList default notifications enabledNotificationsList icon of application "Script Editor"
-				-- Send a Notification...
-				notify with name "Function Keys Toggled" title "Function Keys Toggled" description messageToShow application name "Toggle Function Keys"
-			end tell
+			display notification messageToShow
 		end tell
 		tell application "System Preferences" to quit
 	else
 		-- GUI scripting not enabled.  Display an alert
 		tell application "System Preferences"
 			activate
-			set current pane to pane "com.apple.preference.universalaccess"
-			display dialog "UI element scripting is not enabled. Please activate \"Enable access for assistive devices\""
+			set current pane to pane "com.apple.preference.security"
+			display dialog "UI element scripting is not enabled. Please activate this app under Privacy -> Accessibility so it can access the settings it needs."
 		end tell
 	end if
 end tell
